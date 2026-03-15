@@ -1,25 +1,77 @@
-# Ex-4 Rail-Fence-Program
+# Rail Fence Cipher
 
-# IMPLEMENTATION OF RAIL FENCE – ROW & COLUMN TRANSFORMATION TECHNIQUE
+Rail Fence Cipher using different key values
 
-# AIM:
+## AIM
 
-# To write a C program to implement the rail fence transposition technique.
+To develop a simple C program to implement the Rail Fence Cipher.
 
-# DESCRIPTION:
+## DESIGN STEPS
+### Step 1
 
-In the rail fence cipher, the plain text is written downwards and diagonally on successive "rails" of an imaginary fence, then moving up when we reach the bottom rail. When we reach the top rail, the message is written downwards again until the whole plaintext is written out. The message is then read off in rows.
+Design the Rail Fence Cipher algorithm.
 
-# ALGORITHM:
+### Step 2
 
-STEP-1: Read the Plain text.
-STEP-2: Arrange the plain text in row columnar matrix format.
-STEP-3: Now read the keyword depending on the number of columns of the plain text.
-STEP-4: Arrange the characters of the keyword in sorted order and the corresponding columns of the plain text.
-STEP-5: Read the characters row wise or column wise in the former order to get the cipher text.
+Implement the algorithm using C or Python code.
 
-# PROGRAM
+### Step 3
 
-# OUTPUT
+Test the algorithm with different key values.
 
-# RESULT
+#### ALGORITHM DESCRIPTION
+
+In the Rail Fence Cipher, the plaintext is written downwards and diagonally on successive rails of an imaginary fence. When the bottom rail is reached, the direction is changed upwards. Similarly, when the top rail is reached, the direction is changed downwards again. This process continues until the entire plaintext is written.
+Finally, the encrypted message is obtained by reading the characters row by row.
+
+## PROGRAM
+```
+#include <stdio.h>
+#include <string.h>
+
+int main()
+{
+    int i, j, len, rails, count = 0;
+    char str[1000];
+    int code[100][1000] = {0};
+
+    printf("Enter a Secret Message:\n");
+    fgets(str, sizeof(str), stdin);
+    str[strcspn(str, "\n")] = '\0';
+
+    len = strlen(str);
+
+    printf("Enter number of rails:\n");
+    scanf("%d", &rails);
+
+    j = 0;
+    while (j < len)
+    {
+        if (count % 2 == 0)
+        {
+            for (i = 0; i < rails && j < len; i++)
+                code[i][j++] = str[j - 1];
+        }
+        else
+        {
+            for (i = rails - 2; i > 0 && j < len; i--)
+                code[i][j++] = str[j - 1];
+        }
+        count++;
+    }
+
+    printf("Encrypted Message:\n");
+    for (i = 0; i < rails; i++)
+        for (j = 0; j < len; j++)
+            if (code[i][j] != 0)
+                printf("%c", code[i][j]);
+
+    return 0;
+}
+```
+## OUTPUT
+<img width="1475" height="982" alt="Screenshot 2026-02-02 041856" src="https://github.com/user-attachments/assets/c988954a-9ad1-4e54-b821-a47f0a233b5e" />
+
+
+## RESULT:
+The program was executed successfully, and the Rail Fence Cipher encryption was obtained for the given input.
